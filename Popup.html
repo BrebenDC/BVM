@@ -75,9 +75,9 @@
   function closePopup(device) {
     document.getElementById("popupOverlay").style.display = "none";
     
-    if (device === 'phone') {
+    if (device === 'pc') {
       window.location.href = "BVM.html";  // relative, or use full path if needed
-    } else if (device === 'pc') {
+    } else if (device === 'phone') {
       window.location.href = "https://brebendc.github.io/BVM/BVM.html";  // or change to a different PC-optimized page if that's the intent
     }
   }
