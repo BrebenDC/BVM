@@ -5,71 +5,468 @@
 
 
 
-
-<body>
-  <a href="support.html">
-    <img src="Fotos/logo.png" alt="BAM logo" class="logo">
-  </a>
-<html lang="nl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BVM — Vision</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Space+Mono&display=swap" rel="stylesheet"/>
   <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      margin: 0;
-      background: black;
+      background: #000;
+      color: #ccc;
+      font-family: 'Space Mono', monospace;
+      cursor: none;
+      overflow-x: hidden;
     }
-    .logo {
+
+    .cursor {
       position: fixed;
-      top: 10;
-      left: 10;
-      height: 60;
+      width: 8px; height: 8px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor.big { width: 36px; height: 36px; }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    .loadbar {
+      position: fixed; top: 0; left: 0;
+      height: 1px; background: #333;
+      animation: load 1.5s ease forwards;
+      z-index: 9997;
+    }
+    @keyframes load {
+      0% { width: 0; opacity: 1; }
+      80% { width: 100%; opacity: 1; }
+      100% { width: 100%; opacity: 0; }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 48px;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      height: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.3s;
+    }
+
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+    .nav-links a {
+      font-size: 9px; letter-spacing: 0.35em;
+      text-transform: uppercase; color: #888;
+      text-decoration: none; cursor: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #777; }
+    .nav-links a.active { color: #666; }
+
+    /* HERO — auto fullscreen */
+    .hero {
+      position: relative;
+      width: 100vw; height: 100vh;
+      overflow: hidden;
+      display: flex; align-items: flex-end;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('auto.png');
+      background-size: cover;
+      background-position: center;
+      animation: slowZoom 14s ease forwards;
+    }
+
+    @keyframes slowZoom {
+      from { transform: scale(1.06); }
+      to { transform: scale(1); }
+    }
+
+    /* Keep the cyan glow but darken edges */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.5) 0%,
+        rgba(0,0,0,0) 35%,
+        rgba(0,0,0,0) 55%,
+        rgba(0,0,0,0.95) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 48px 60px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1s;
+    }
+
+    .hero-left h1 {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(48px, 7vw, 96px);
+      color: #555;
+      line-height: 0.95;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-left p {
+      font-size: 9px;
+      letter-spacing: 0.4em;
+      color: #666;
+      text-transform: uppercase;
+      margin-top: 16px;
+    }
+
+    .hero-right {
+      text-align: right;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: #555;
+      text-transform: uppercase;
+      line-height: 2.2;
+    }
+
+    /* Corner decorations */
+    .corner { position: fixed; width: 40px; height: 40px; opacity: 0; animation: fadeIn 1s ease forwards 1.5s; }
+    .corner-tl { top: 16px; left: 16px; border-top: 1px solid #111; border-left: 1px solid #111; }
+    .corner-tr { top: 16px; right: 16px; border-top: 1px solid #111; border-right: 1px solid #111; }
+    .corner-bl { bottom: 16px; left: 16px; border-bottom: 1px solid #111; border-left: 1px solid #111; }
+    .corner-br { bottom: 16px; right: 16px; border-bottom: 1px solid #111; border-right: 1px solid #111; }
+
+    /* 3 COLUMNS SECTION */
+    .vision-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+      background: #050505;
+      border-top: 1px solid #0d0d0d;
+      border-bottom: 1px solid #0d0d0d;
+    }
+
+    .grid-divider { background: #0d0d0d; }
+
+    .vision-col {
+      padding: 80px 56px;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .vision-col.visible { opacity: 1; transform: translateY(0); }
+
+    .col-label {
+      font-size: 8px;
+      letter-spacing: 0.5em;
+      color: #555;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+
+    .col-title {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(22px, 2.5vw, 36px);
+      color: #888;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .col-text {
+      font-size: 11px;
+      line-height: 2;
+      color: #888;
+    }
+
+    .col-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .col-list li {
+      font-size: 11px;
+      color: #777;
+      letter-spacing: 0.08em;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .col-list li::before { content: '—'; color: #444; flex-shrink: 0; }
+
+    .timeline-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .timeline-item {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid #0a0a0a;
+      opacity: 0;
+      transform: translateX(12px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .timeline-item.visible { opacity: 1; transform: translateX(0); }
+    .timeline-item:last-child { border-bottom: none; }
+
+    .timeline-year {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 13px;
+      color: #555;
+      min-width: 48px;
+      letter-spacing: 0.05em;
+    }
+
+    .timeline-desc {
+      font-size: 10px;
+      color: #666;
+      letter-spacing: 0.1em;
+      line-height: 1.6;
+      padding-top: 2px;
+    }
+
+    /* BOTTOM CTA */
+    .cta-section {
+      padding: 100px 48px;
+      text-align: center;
+      border-bottom: 1px solid #0a0a0a;
+    }
+
+    .cta-label {
+      font-size: 8px;
+      letter-spacing: 0.5em;
+      color: #555;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .cta-label.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-title {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(32px, 5vw, 64px);
+      color: #888;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+    }
+    .cta-title.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-buttons {
+      display: flex; gap: 16px; justify-content: center;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+    }
+    .cta-buttons.visible { opacity: 1; transform: translateY(0); }
+
+    .btn {
+      display: inline-flex; align-items: center;
+      padding: 14px 32px;
+      border: 1px solid #1a1a1a;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px; letter-spacing: 0.3em;
+      text-transform: uppercase; color: #888;
+      text-decoration: none; cursor: none;
+      position: relative; overflow: hidden;
+      transition: color 0.4s;
+    }
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: #111;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+    .btn:hover::before { transform: translateX(0); }
+    .btn:hover { color: #888; border-color: #666; }
+    .btn span { position: relative; z-index: 1; }
+
+    /* FOOTER */
+    footer {
+      padding: 36px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid #0a0a0a;
+    }
+    .footer-logo { height: 20px; opacity: 0.15; }
+    .footer-links { display: flex; gap: 32px; list-style: none; }
+    .footer-links a {
+      font-size: 8px; letter-spacing: 0.3em;
+      color: #444; text-decoration: none;
+      text-transform: uppercase; cursor: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: #666; }
+    .footer-copy { font-size: 8px; letter-spacing: 0.2em; color: #444; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
-
-
-
-
-
 <body>
-  <a href="BVM.html">
-    <img src="Fotos/support_foto.png" alt="BAM logo" class="logo">
-  </a>
 
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content ="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<div style="background-image: url('Fotos/auto.png'); 
-background-size: cover; 
-background-repeat: no-repeat; 
-background-position: center; 
-width: 100vw; 
-height: 100vh;">
+  <div class="cursor" id="cursor"></div>
+  <div class="loadbar"></div>
+
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="BVM.html"><img src="logo.png" class="nav-logo" alt="BVM"/></a>
+    <ul class="nav-links">
+      <li><a href="meerinfo.html" class="active">Vision</a></li>
+      <li><a href="webshop.html">Shop</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — auto foto -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1>Our<br/>Vision</h1>
+        <p>Belgium · 2029</p>
+      </div>
+      <div class="hero-right">
+        Car factory belgium<br/>
+        The start of an era begins here
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 COLUMNS -->
+  <div class="vision-grid">
+    <div class="vision-col" id="col1">
+      <div class="col-label">Who we are</div>
+      <div class="col-title">Car Factory Belgium</div>
+      <p class="col-text">BVM is building the first Belgian car brand of its kind. A vision that starts today and drives into 2029.</p>
+    </div>
+
+    <div class="grid-divider"></div>
+
+    <div class="vision-col" id="col2">
+      <div class="col-label">What we need</div>
+      <ul class="col-list">
+        <li>Investors</li>
+        <li>A famous enough program</li>
+        <li>A software</li>
+        <li>Quality parts</li>
+        <li>A model</li>
+        <li>And more...</li>
+      </ul>
+    </div>
+
+    <div class="grid-divider"></div>
+
+    <div class="vision-col" id="col3">
+      <div class="col-label">Timeline</div>
+      <ul class="timeline-list">
+        <li class="timeline-item" id="t1">
+          <span class="timeline-year">2026</span>
+          <span class="timeline-desc">Brand launch</span>
+        </li>
+        <li class="timeline-item" id="t2">
+          <span class="timeline-year">2027</span>
+          <span class="timeline-desc">$BVM coin</span>
+        </li>
+        <li class="timeline-item" id="t3">
+          <span class="timeline-year">2028</span>
+          <span class="timeline-desc">First prototype</span>
+        </li>
+        <li class="timeline-item" id="t4">
+          <span class="timeline-year">2029</span>
+          <span class="timeline-desc">Production begins</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-label">Join the movement</div>
+    <div class="cta-title">Support our BVM coin IN 2027</div>
+    <div class="cta-buttons">
+      <a href="support.html" class="btn"><span>Support BVM</span></a>
+      <a href="webshop.html" class="btn"><span>Shop</span></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="logo.png" class="footer-logo" alt="BVM"/>
+    <ul class="footer-links">
+      <li><a href="https://www.tiktok.com/@BVM-Official">TikTok</a></li>
+      <li><a href="https://www.youtube.com/@B-DC">YouTube</a></li>
+      <li><a href="https://www.gofundme.com/f/new-belgian-car-brand">GoFundMe</a></li>
+      <li><a href="mailto:websitesbreben@gmail.com">Email</a></li>
+    </ul>
+    <div class="footer-copy">© Breben DC 2026</div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+
+    ['col1','col2','col3','t1','t2','t3','t4'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.transitionDelay = (i * 0.1) + 's';
+        observer.observe(el);
+      }
+    });
+
+    document.querySelectorAll('.cta-label, .cta-title, .cta-buttons').forEach((el, i) => {
+      el.style.transitionDelay = (i * 0.1) + 's';
+      observer.observe(el);
+    });
+  </script>
 </body>
-</div>
 </html>
-
-
-
-<body style ="background-color:black;color:white">
-
-
-</body>
-
-
-
-
-
-<h1> 
-
-</h1>
-<footer>
-<center> <a href ="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJvqsKgwlpKtgQhxtMwlzrqFMDClwJSLMqTfkFwcWzzXLcGgsFnCsNvbqBctSHrPBbSSsVq"
-target ="blank"><b>Email</b> </a> </p>
-Copyright &copy; Breben DC 6/09/2025 </h1> >
-</center>
-</footer>
 </html>
