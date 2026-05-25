@@ -1,121 +1,677 @@
-<link rel="icon" type="Fotos/foto.png" href="Fotos/logo.png">
-<html>
-  <body style ="background-color:black;color:white"></body>
-<title>BVM</title>
-
-
-
-
-<body>
-  <a href="support.html">
-    <img src="Fotos/logo.png" alt="BAM logo" class="logo">
-  </a>
-<html lang="nl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BVM — Belgische Voertuig Motoriek</title>
+  <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
-    body {
-      margin: 0;
-      background: black;
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #000;
+      --white: #fff;
+      --gray: #111;
+      --dim: #333;
+      --mid: #555;
     }
-    .logo {
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* Cursor */
+    .cursor {
       position: fixed;
-      top: 10;
-      left: 10;
-      height: 60;
+      width: 8px; height: 8px;
+      background: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor.big { width: 40px; height: 40px; background: white; }
+
+    /* Noise */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* Loading bar */
+    .loadbar {
+      position: fixed; top: 0; left: 0;
+      height: 1px; background: white;
+      animation: load 1.5s ease forwards;
+      z-index: 9997;
+    }
+    @keyframes load {
+      0% { width: 0; opacity: 1; }
+      80% { width: 100%; opacity: 1; }
+      100% { width: 100%; opacity: 0; }
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 48px;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    .nav-logo {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.2em;
+      color: white;
+      text-decoration: none;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.5s;
+    }
+
+    .nav-links {
+      display: flex; gap: 40px;
+      list-style: none;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.7s;
+    }
+
+    .nav-links a {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.3s;
+      cursor: none;
+    }
+    .nav-links a:hover { color: white; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      width: 100vw; height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Big BVM background text */
+    .hero-bg-text {
+      position: absolute;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 28vw;
+      color: transparent;
+      -webkit-text-stroke: 1px #111;
+      letter-spacing: 0.05em;
+      user-select: none;
+      pointer-events: none;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 0.3s;
+      line-height: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0;
+    }
+
+    .hero-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.6em;
+      color: var(--dim);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.8s;
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(72px, 12vw, 160px);
+      letter-spacing: 0.1em;
+      line-height: 0.9;
+      opacity: 0;
+      animation: revealTitle 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s;
+    }
+
+    @keyframes revealTitle {
+      0% { opacity: 0; transform: translateY(40px) scaleY(0.8); filter: blur(20px); }
+      100% { opacity: 1; transform: translateY(0) scaleY(1); filter: blur(0); }
+    }
+
+    .hero-sub {
+      font-size: 10px;
+      letter-spacing: 0.5em;
+      color: var(--mid);
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.6s;
+      margin-top: 20px;
+    }
+
+    .hero-tagline {
+      font-size: clamp(13px, 1.5vw, 16px);
+      letter-spacing: 0.05em;
+      color: #444;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.9s;
+      margin-top: 12px;
+    }
+
+    /* Corner decorations */
+    .corner { position: fixed; width: 48px; height: 48px; opacity: 0; animation: fadeIn 1s ease forwards 2s; }
+    .corner-tl { top: 20px; left: 20px; border-top: 1px solid #1a1a1a; border-left: 1px solid #1a1a1a; }
+    .corner-tr { top: 20px; right: 20px; border-top: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; }
+    .corner-bl { bottom: 20px; left: 20px; border-bottom: 1px solid #1a1a1a; border-left: 1px solid #1a1a1a; }
+    .corner-br { bottom: 20px; right: 20px; border-bottom: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 2.5s;
+    }
+    .scroll-hint span { font-size: 8px; letter-spacing: 0.4em; color: #333; text-transform: uppercase; }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, #333, transparent);
+      animation: scrollPulse 2s ease infinite 3s;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    /* VIDEO SECTION */
+    .video-section {
+      padding: 120px 48px;
+      position: relative;
+    }
+
+    .section-label {
+      font-size: 8px;
+      letter-spacing: 0.5em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1; height: 1px;
+      background: #111;
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      border: 1px solid #111;
+    }
+
+    .video-wrapper::before {
+      content: 'BVM';
+      position: absolute;
+      top: -1px; right: 24px;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: #111;
+      background: black;
+      padding: 0 8px;
+      transform: translateY(-50%);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      display: block;
+      filter: brightness(0.95);
+    }
+
+    /* INFO SECTION — the slide */
+    .info-section {
+      padding: 80px 48px 120px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: #111;
+      border-top: 1px solid #111;
+      border-bottom: 1px solid #111;
+    }
+
+    .info-block {
+      background: black;
+      padding: 60px 48px;
+      position: relative;
+    }
+
+    .info-block-label {
+      font-size: 8px;
+      letter-spacing: 0.5em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .info-block h2 {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .info-block p {
+      font-size: 12px;
+      line-height: 2;
+      color: #555;
+      letter-spacing: 0.05em;
+    }
+
+    .info-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+
+    .info-list li {
+      font-size: 11px;
+      color: #444;
+      letter-spacing: 0.1em;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .info-list li::before {
+      content: '—';
+      color: #222;
+    }
+
+    /* WHY section */
+    .why-section {
+      padding: 120px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-bg {
+      position: absolute;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 20vw;
+      color: transparent;
+      -webkit-text-stroke: 1px #0a0a0a;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .why-content { position: relative; z-index: 2; }
+
+    .why-question {
+      font-size: 9px;
+      letter-spacing: 0.5em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .why-title {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(36px, 6vw, 80px);
+      line-height: 1;
+      margin-bottom: 48px;
+    }
+
+    .why-countries {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 64px;
+      border: 1px solid #111;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 64px;
+    }
+
+    .country {
+      flex: 1;
+      padding: 24px;
+      border-right: 1px solid #111;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: #333;
+      text-transform: uppercase;
+    }
+    .country:last-child { border-right: none; }
+    .country span { display: block; font-size: 18px; margin-bottom: 8px; }
+
+    .why-answer {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(28px, 4vw, 52px);
+      color: white;
+    }
+
+    /* COIN SECTION */
+    .coin-section {
+      padding: 120px 48px;
+      border-top: 1px solid #0d0d0d;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .coin-text .tag {
+      font-size: 8px;
+      letter-spacing: 0.5em;
+      color: var(--dim);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .coin-text h2 {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .coin-text p {
+      font-size: 11px;
+      line-height: 2;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .coin-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .coin-circle {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      border: 1px solid #1a1a1a;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      animation: rotateSlow 20s linear infinite;
+    }
+
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .coin-circle::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border-radius: 50%;
+      border: 1px solid #0d0d0d;
+    }
+
+    .coin-inner {
+      animation: rotateSlow 20s linear infinite reverse;
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 42px;
+      letter-spacing: 0.1em;
+    }
+
+    .coin-year {
+      position: absolute;
+      bottom: -32px;
+      font-size: 9px;
+      letter-spacing: 0.4em;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    /* CTA button */
+    .btn {
+      display: inline-flex;
+      align-items: center; gap: 12px;
+      padding: 16px 32px;
+      border: 1px solid #222;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #666;
+      text-decoration: none;
+      cursor: none;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: white;
+      transform: translateX(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 0;
+    }
+    .btn:hover::before { transform: translateX(0); }
+    .btn:hover { color: black; border-color: white; }
+    .btn span { position: relative; z-index: 1; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #0d0d0d;
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.2em;
+      color: #1a1a1a;
+    }
+
+    .footer-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+
+    .footer-links a {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: #2a2a2a;
+      text-decoration: none;
+      text-transform: uppercase;
+      cursor: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: #555; }
+
+    .footer-copy {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      color: #1a1a1a;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
-
-  <a href="support.html">
-<video autoplay muted loop playsinline style="
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-">
-  <source src="Fotos/video2.mp4" type="video/mp4">
-</video>
-  </a>
-
-
-
-
-	
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content ="width=device-width, initial-scale=1.0">
-</head>
-
 <body>
-<div style="background-image: url('/.png'); 
-background-size: contain; 
-background-repeat: no-repeat; 
-background-position: center; 
-width: 100vw; 
-height: 100vh;">
-</div>
-</a>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="loadbar"></div>
+
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="BVM.html" class="nav-logo">BVM</a>
+    <ul class="nav-links">
+      <li><a href="meerinfo.html">Vision</a></li>
+      <li><a href="webshop.html">Shop</a></li>
+      <li><a href="support.html">Support</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-text">BVM</div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Belgische Voertuig Motoriek</div>
+      <div class="hero-title">BVM</div>
+      <div class="hero-sub">Car Factory Belgium &nbsp;·&nbsp; Est. 2029</div>
+      <div class="hero-tagline">The start of an era begins here.</div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- VIDEO -->
+  <section class="video-section">
+    <div class="section-label">Our vision</div>
+    <div class="video-wrapper">
+      <video autoplay muted loop playsinline>
+        <source src="Fotos/video2.mp4" type="video/mp4">
+      </video>
+    </div>
+  </section>
+
+  <!-- INFO 3 COLUMNS -->
+  <section class="info-section">
+    <div class="info-block">
+      <div class="info-block-label">Who we are</div>
+      <h2>Car Factory Belgium</h2>
+      <p>BVM is building the first Belgian car brand of its kind. A vision that starts today and drives into 2029.</p>
+    </div>
+    <div class="info-block">
+      <div class="info-block-label">What we need</div>
+      <ul class="info-list">
+        <li>Investors</li>
+        <li>A renowned program</li>
+        <li>Software</li>
+        <li>Quality parts</li>
+        <li>A model</li>
+        <li>And more...</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <div class="info-block-label">Timeline</div>
+      <ul class="info-list">
+        <li>2026 — Brand launch</li>
+        <li>2027 — $BVM coin</li>
+        <li>2028 — First prototype</li>
+        <li>2029 — Production begins</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- WHY BELGIUM -->
+  <section class="why-section">
+    <div class="why-bg">WHY?</div>
+    <div class="why-content">
+      <div class="why-question">The question everyone asks</div>
+      <div class="why-title">Why we need it</div>
+      <div class="why-countries">
+        <div class="country"><span>🇺🇸</span>USA has it</div>
+        <div class="country"><span>🇩🇪</span>Germany has it</div>
+        <div class="country"><span>🇫🇷</span>France has it</div>
+      </div>
+      <div class="why-answer">Why not Belgium?</div>
+    </div>
+  </section>
+
+  <!-- COIN SECTION -->
+  <section class="coin-section">
+    <div class="coin-text">
+      <div class="tag">Coming 2027</div>
+      <h2>Support the $BVM Coin</h2>
+      <p>Before the factory. Before the car. There is the community. Join the movement early and be part of Belgian automotive history.</p>
+      <a href="support.html" class="btn"><span>Support BVM</span></a>
+    </div>
+    <div class="coin-visual">
+      <div class="coin-circle">
+        <div class="coin-inner">$BVM</div>
+      </div>
+      <div class="coin-year">Launching 2027</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">BVM</div>
+    <ul class="footer-links">
+      <li><a href="https://www.tiktok.com/@BVM-Official">TikTok</a></li>
+      <li><a href="https://www.youtube.com/@B-DC">YouTube</a></li>
+      <li><a href="https://www.gofundme.com/f/new-belgian-car-brand">GoFundMe</a></li>
+      <li><a href="mailto:brebend47@gmail.com">Email</a></li>
+    </ul>
+    <div class="footer-copy">© Breben DC 2026</div>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.info-block, .coin-text, .why-title, .why-answer').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      observer.observe(el);
+    });
+  </script>
 </body>
-
-
-<body style ="background-color:black;color:white">
-</body>
-
-<a href="meerinfo.html">
-
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content ="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-<div style="background-image: url('Fotos/server.png'); 
-background-size: contain; 
-background-repeat: no-repeat; 
-background-position: center; 
-width: 100vw; 
-height: 100vh;">
-</div>
-</a>
-</body>
-
-
-
-	
-<a href="webshop.html">
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content ="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
-<div style="background-image: url('Fotos/webshop.png'); 
-background-size: contain; 
-background-repeat: no-repeat; 
-background-position: center; 
-width: 100vw; 
-height: 100vh;">
-</div>
-</a>
-</body>
-
-<h1> 
-
-</h1>
-<footer>
-<center> <a href ="https://mail.google.com/mail/u/0/#inbox?compose=CllgCJvqsKgwlpKtgQhxtMwlzrqFMDClwJSLMqTfkFwcWzzXLcGgsFnCsNvbqBctSHrPBbSSsVq"
-target ="blank"><b>Email</b> </a> </p>
-Copyright &copy; Breben DC 6/09/2025 </h1> >
-</center>
-</footer>
 </html>
-
-
-
-
