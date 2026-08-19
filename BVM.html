@@ -583,34 +583,366 @@
     </div>
   </section>
 
-  <!-- INFO 3 COLUMNS -->
-  <section class="info-section">
-    <div class="info-block">
-      <div class="info-block-label">Who we are</div>
-      <h2>Car Factory Belgium</h2>
-      <p>BVM is building the first Belgian car brand of its kind. A vision that starts today and drives into 2029.</p>
+  <!-- LIVE TIJDLIJN -->
+  <!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BVM Roadmap – Live Progress</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a0a;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .roadmap {
+      width: 100%;
+      max-width: 1100px;
+      background: #111;
+      border-radius: 16px;
+      padding: 48px 40px 40px;
+      border: 1px solid #222;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .header h2 {
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #888;
+      font-weight: 500;
+    }
+
+    .header .accent {
+      width: 40px;
+      height: 2px;
+      background: #ff3b3b;
+      margin: 12px auto 0;
+    }
+
+    /* Timeline */
+    .timeline-wrapper {
+      position: relative;
+      padding: 0 20px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 48px;
+      left: 40px;
+      right: 40px;
+      height: 3px;
+      background: #2a2a2a;
+      border-radius: 2px;
+      z-index: 1;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 8%; /* ~2026 positie */
+      background: linear-gradient(90deg, #00d4ff, #0099cc);
+      border-radius: 2px;
+      box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+      transition: width 1.2s ease;
+    }
+
+    .milestones {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .milestone {
+      text-align: center;
+      width: 22%;
+      position: relative;
+    }
+
+    .dot {
+      width: 18px;
+      height: 18px;
+      background: #333;
+      border: 3px solid #555;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      position: relative;
+      z-index: 3;
+      transition: all 0.3s ease;
+    }
+
+    .milestone.active .dot {
+      background: #00d4ff;
+      border-color: #00d4ff;
+      box-shadow: 0 0 16px rgba(0, 212, 255, 0.6);
+      transform: scale(1.15);
+    }
+
+    .year {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .milestone:not(.active) .year {
+      color: #666;
+    }
+
+    .label {
+      font-size: 14px;
+      color: #999;
+      line-height: 1.3;
+    }
+
+    .milestone.active .label {
+      color: #ccc;
+    }
+
+    /* Auto */
+    .car-container {
+      position: absolute;
+      top: 18px;
+      left: 8%; /* zelfde als progress */
+      transform: translateX(-50%);
+      z-index: 10;
+      transition: left 1.2s ease;
+    }
+
+    .car {
+      width: 90px;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+    }
+
+    .now-badge {
+      position: absolute;
+      top: -36px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00d4ff;
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    .now-badge::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #00d4ff;
+    }
+
+    /* Footer info */
+    .live-info {
+      margin-top: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #00d4ff;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .progress-bar-bottom {
+      margin-top: 32px;
+      height: 6px;
+      background: #222;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 12%;
+      background: linear-gradient(90deg, #00d4ff, #0099cc);
+      border-radius: 3px;
+      transition: width 1.2s ease;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #666;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .roadmap {
+        padding: 32px 20px;
+      }
+
+      .year {
+        font-size: 20px;
+      }
+
+      .label {
+        font-size: 12px;
+      }
+
+      .car {
+        width: 65px;
+      }
+
+      .car-container {
+        top: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="roadmap">
+    <div class="header">
+      <h2>BVM Roadmap – Live Progress</h2>
+      <div class="accent"></div>
     </div>
-    <div class="info-block">
-      <div class="info-block-label">What we need</div>
-      <ul class="info-list">
-        <li>Investors</li>
-        <li>A renowned program</li>
-        <li>Software</li>
-        <li>Quality parts</li>
-        <li>A model</li>
-        <li>And more...</li>
-      </ul>
+
+    <div class="timeline-wrapper">
+      <div class="timeline-line">
+        <div class="timeline-progress" id="progressLine"></div>
+      </div>
+
+      <!-- Auto -->
+      <div class="car-container" id="car">
+        <div class="now-badge">NOW</div>
+        <!-- Simpele SVG auto (je kunt dit later vervangen door een echte auto-afbeelding) -->
+        <svg class="car" viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body -->
+          <path d="M10 32 L18 18 H45 L58 12 H95 L110 25 V38 H100 C100 42 96 45 92 45 H85 C81 45 77 42 77 38 H45 C45 42 41 45 37 45 H30 C26 45 22 42 22 38 H10 Z" fill="#1a1a1a" stroke="#00d4ff" stroke-width="1.5"/>
+          <!-- Windows -->
+          <path d="M48 18 L55 14 H90 L98 22 H52 Z" fill="#111" stroke="#00d4ff" stroke-width="1"/>
+          <!-- Wheels -->
+          <circle cx="32" cy="38" r="7" fill="#111" stroke="#00d4ff" stroke-width="1.5"/>
+          <circle cx="90" cy="38" r="7" fill="#111" stroke="#00d4ff" stroke-width="1.5"/>
+          <!-- Light -->
+          <circle cx="108" cy="28" r="3" fill="#00d4ff"/>
+          <!-- Belgian accent stripe -->
+          <rect x="20" y="26" width="8" height="3" fill="#ffcc00"/>
+          <rect x="20" y="29" width="8" height="3" fill="#000"/>
+          <rect x="20" y="32" width="8" height="3" fill="#ef3340"/>
+        </svg>
+      </div>
+
+      <div class="milestones">
+        <div class="milestone active" data-year="2026">
+          <div class="dot"></div>
+          <div class="year">2026</div>
+          <div class="label">Brand launch</div>
+        </div>
+        <div class="milestone" data-year="2027">
+          <div class="dot"></div>
+          <div class="year">2027</div>
+          <div class="label">$BVM coin</div>
+        </div>
+        <div class="milestone" data-year="2028">
+          <div class="dot"></div>
+          <div class="year">2028</div>
+          <div class="label">First prototype</div>
+        </div>
+        <div class="milestone" data-year="2029">
+          <div class="dot"></div>
+          <div class="year">2029</div>
+          <div class="label">Production begins</div>
+        </div>
+      </div>
     </div>
-    <div class="info-block">
-      <div class="info-block-label">Timeline</div>
-      <ul class="info-list">
-        <li>2026 — Brand launch</li>
-        <li>2027 — $BVM coin</li>
-        <li>2028 — First prototype</li>
-        <li>2029 — Production begins</li>
-      </ul>
+
+    <div class="live-info">
+      <div class="live-dot"></div>
+      <span>We are here – August 2026</span>
     </div>
-  </section>
+
+    <div class="progress-bar-bottom">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-labels">
+      <span>PROGRESS</span>
+      <span>~12–15%</span>
+    </div>
+  </div>
+
+  <script>
+    // Live berekening op basis van huidige datum
+    function updateProgress() {
+      const now = new Date();
+      const start = new Date('2026-01-01');
+      const end = new Date('2029-12-31');
+
+      const total = end - start;
+      const current = now - start;
+      let percent = Math.max(0, Math.min(100, (current / total) * 100));
+
+      // Visueel een beetje afronden zodat 2026 duidelijk vooraan staat
+      // 2026 = 0-25%, 2027 = 25-50%, etc.
+      const year = now.getFullYear();
+      let visualPercent;
+
+      if (year <= 2026) {
+        visualPercent = 8 + (now.getMonth() / 12) * 12; // 8% → ~20%
+      } else if (year === 2027) {
+        visualPercent = 25 + (now.getMonth() / 12) * 20;
+      } else if (year === 2028) {
+        visualPercent = 50 + (now.getMonth() / 12) * 20;
+      } else {
+        visualPercent = 75 + (now.getMonth() / 12) * 20;
+      }
+
+      visualPercent = Math.min(95, visualPercent);
+
+      document.getElementById('progressLine').style.width = visualPercent + '%';
+      document.getElementById('progressFill').style.width = visualPercent + '%';
+      document.getElementById('car').style.left = visualPercent + '%';
+    }
+
+    updateProgress();
+    // Optioneel: elke minuut updaten
+    // setInterval(updateProgress, 60000);
+  </script>
+</body>
+</html>
 
   <!-- WHY BELGIUM -->
   <section class="why-section">
