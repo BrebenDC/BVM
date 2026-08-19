@@ -1,22 +1,13 @@
-
-
-<link rel="icon" type="Fotos/foto.png" href="Fotos/logo.png">
-<html>
-  <body style ="background-color:black;color:white"></body>
-<title>BVM</title>
-
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+  <title>BVM</title>
+  <link rel="icon" type="image/png" href="Fotos/logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Space+Mono:ital@0;1&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
       --black: #000;
       --white: #fff;
@@ -24,9 +15,7 @@
       --dim: #333;
       --mid: #555;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--black);
       color: var(--white);
@@ -79,7 +68,6 @@
       z-index: 100;
       mix-blend-mode: difference;
     }
-
     .nav-logo {
       font-family: 'Black Ops One', sans-serif;
       font-size: 22px;
@@ -89,14 +77,12 @@
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 0.5s;
     }
-
     .nav-links {
       display: flex; gap: 40px;
       list-style: none;
       opacity: 0;
       animation: fadeUp 0.8s ease forwards 0.7s;
     }
-
     .nav-links a {
       font-size: 9px;
       letter-spacing: 0.35em;
@@ -116,8 +102,6 @@
       align-items: center; justify-content: center;
       overflow: hidden;
     }
-
-    /* Big BVM background text */
     .hero-bg-text {
       position: absolute;
       font-family: 'Black Ops One', sans-serif;
@@ -131,7 +115,6 @@
       animation: fadeIn 1.5s ease forwards 0.3s;
       line-height: 1;
     }
-
     .hero-content {
       position: relative;
       z-index: 2;
@@ -139,7 +122,6 @@
       display: flex; flex-direction: column;
       align-items: center; gap: 0;
     }
-
     .hero-eyebrow {
       font-size: 9px;
       letter-spacing: 0.6em;
@@ -149,7 +131,6 @@
       animation: fadeUp 1s ease forwards 0.8s;
       margin-bottom: 16px;
     }
-
     .hero-title {
       font-family: 'Black Ops One', sans-serif;
       font-size: clamp(72px, 12vw, 160px);
@@ -158,12 +139,10 @@
       opacity: 0;
       animation: revealTitle 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 1s;
     }
-
     @keyframes revealTitle {
       0% { opacity: 0; transform: translateY(40px) scaleY(0.8); filter: blur(20px); }
       100% { opacity: 1; transform: translateY(0) scaleY(1); filter: blur(0); }
     }
-
     .hero-sub {
       font-size: 10px;
       letter-spacing: 0.5em;
@@ -173,7 +152,6 @@
       animation: fadeUp 1s ease forwards 1.6s;
       margin-top: 20px;
     }
-
     .hero-tagline {
       font-size: clamp(13px, 1.5vw, 16px);
       letter-spacing: 0.05em;
@@ -184,7 +162,7 @@
       margin-top: 12px;
     }
 
-    /* Corner decorations */
+    /* Corners */
     .corner { position: fixed; width: 48px; height: 48px; opacity: 0; animation: fadeIn 1s ease forwards 2s; }
     .corner-tl { top: 20px; left: 20px; border-top: 1px solid #1a1a1a; border-left: 1px solid #1a1a1a; }
     .corner-tr { top: 20px; right: 20px; border-top: 1px solid #1a1a1a; border-right: 1px solid #1a1a1a; }
@@ -214,7 +192,6 @@
       padding: 120px 48px;
       position: relative;
     }
-
     .section-label {
       font-size: 8px;
       letter-spacing: 0.5em;
@@ -228,7 +205,6 @@
       flex: 1; height: 1px;
       background: #111;
     }
-
     .video-wrapper {
       position: relative;
       width: 100%;
@@ -236,7 +212,6 @@
       margin: 0 auto;
       border: 1px solid #111;
     }
-
     .video-wrapper::before {
       content: 'BVM';
       position: absolute;
@@ -249,67 +224,207 @@
       padding: 0 8px;
       transform: translateY(-50%);
     }
-
     .video-wrapper video {
       width: 100%;
       display: block;
       filter: brightness(0.95);
     }
 
-    /* INFO SECTION — the slide */
-    .info-section {
-      padding: 80px 48px 120px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1px;
-      background: #111;
-      border-top: 1px solid #111;
-      border-bottom: 1px solid #111;
+    /* ===================== LIVE ROADMAP ===================== */
+    .roadmap-section {
+      padding: 100px 48px 120px;
+      border-top: 1px solid #0d0d0d;
     }
-
-    .info-block {
-      background: black;
-      padding: 60px 48px;
-      position: relative;
+    .roadmap-header {
+      text-align: center;
+      margin-bottom: 64px;
     }
-
-    .info-block-label {
+    .roadmap-header .tag {
       font-size: 8px;
       letter-spacing: 0.5em;
       color: var(--dim);
       text-transform: uppercase;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
-
-    .info-block h2 {
+    .roadmap-header h2 {
       font-family: 'Black Ops One', sans-serif;
-      font-size: clamp(28px, 3vw, 42px);
-      line-height: 1.1;
-      margin-bottom: 24px;
+      font-size: clamp(28px, 4vw, 42px);
+      letter-spacing: 0.08em;
     }
 
-    .info-block p {
-      font-size: 12px;
-      line-height: 2;
-      color: #555;
+    .timeline-wrapper {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+
+    .timeline-line {
+      position: absolute;
+      top: 42px;
+      left: 8%;
+      right: 8%;
+      height: 1px;
+      background: #1a1a1a;
+      z-index: 1;
+    }
+
+    .timeline-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 12%;
+      background: white;
+      transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .milestones {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 2;
+    }
+
+    .milestone {
+      text-align: center;
+      width: 22%;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 3;
+      transition: all 0.4s ease;
+    }
+
+    .milestone.active .dot {
+      background: white;
+      border-color: white;
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.12);
+      transform: scale(1.3);
+    }
+
+    .year {
+      font-family: 'Black Ops One', sans-serif;
+      font-size: 22px;
       letter-spacing: 0.05em;
-    }
-
-    .info-list {
-      list-style: none;
-      display: flex; flex-direction: column; gap: 12px;
-    }
-
-    .info-list li {
-      font-size: 11px;
-      color: #444;
-      letter-spacing: 0.1em;
-      display: flex; align-items: center; gap: 12px;
-    }
-
-    .info-list li::before {
-      content: '—';
       color: #222;
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+
+    .milestone.active .year {
+      color: white;
+    }
+
+    .label {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      color: #333;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .milestone.active .label {
+      color: #666;
+    }
+
+    /* Auto */
+    .car-container {
+      position: absolute;
+      top: 14px;
+      left: 12%;
+      transform: translateX(-50%);
+      z-index: 10;
+      transition: left 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .car {
+      width: 78px;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.6));
+    }
+
+    .now-badge {
+      position: absolute;
+      top: -32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      color: black;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      padding: 3px 9px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .now-badge::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 4px solid white;
+    }
+
+    .live-info {
+      margin-top: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      color: #444;
+      text-transform: uppercase;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .progress-bar-bottom {
+      max-width: 1000px;
+      margin: 40px auto 0;
+      height: 2px;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 12%;
+      background: white;
+      transition: width 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .progress-labels {
+      max-width: 1000px;
+      margin: 10px auto 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      color: #2a2a2a;
+      text-transform: uppercase;
     }
 
     /* WHY section */
@@ -318,8 +433,8 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      border-top: 1px solid #0d0d0d;
     }
-
     .why-bg {
       position: absolute;
       font-family: 'Black Ops One', sans-serif;
@@ -332,9 +447,7 @@
       pointer-events: none;
       user-select: none;
     }
-
     .why-content { position: relative; z-index: 2; }
-
     .why-question {
       font-size: 9px;
       letter-spacing: 0.5em;
@@ -342,14 +455,12 @@
       text-transform: uppercase;
       margin-bottom: 24px;
     }
-
     .why-title {
       font-family: 'Black Ops One', sans-serif;
       font-size: clamp(36px, 6vw, 80px);
       line-height: 1;
       margin-bottom: 48px;
     }
-
     .why-countries {
       display: flex;
       justify-content: center;
@@ -359,9 +470,7 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      margin-bottom: 64px;
     }
-
     .country {
       flex: 1;
       padding: 24px;
@@ -373,7 +482,6 @@
     }
     .country:last-child { border-right: none; }
     .country span { display: block; font-size: 18px; margin-bottom: 8px; }
-
     .why-answer {
       font-family: 'Black Ops One', sans-serif;
       font-size: clamp(28px, 4vw, 52px);
@@ -391,7 +499,6 @@
       max-width: 1200px;
       margin: 0 auto;
     }
-
     .coin-text .tag {
       font-size: 8px;
       letter-spacing: 0.5em;
@@ -399,28 +506,24 @@
       text-transform: uppercase;
       margin-bottom: 24px;
     }
-
     .coin-text h2 {
       font-family: 'Black Ops One', sans-serif;
       font-size: clamp(32px, 4vw, 56px);
       line-height: 1.1;
       margin-bottom: 24px;
     }
-
     .coin-text p {
       font-size: 11px;
       line-height: 2;
       color: #555;
       margin-bottom: 40px;
     }
-
     .coin-visual {
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
-
     .coin-circle {
       width: 280px; height: 280px;
       border-radius: 50%;
@@ -429,12 +532,10 @@
       position: relative;
       animation: rotateSlow 20s linear infinite;
     }
-
     @keyframes rotateSlow {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
-
     .coin-circle::before {
       content: '';
       position: absolute;
@@ -442,14 +543,12 @@
       border-radius: 50%;
       border: 1px solid #0d0d0d;
     }
-
     .coin-inner {
       animation: rotateSlow 20s linear infinite reverse;
       font-family: 'Black Ops One', sans-serif;
       font-size: 42px;
       letter-spacing: 0.1em;
     }
-
     .coin-year {
       position: absolute;
       bottom: -32px;
@@ -476,7 +575,6 @@
       overflow: hidden;
       transition: color 0.4s;
     }
-
     .btn::before {
       content: '';
       position: absolute; inset: 0;
@@ -497,18 +595,15 @@
       align-items: center;
       justify-content: space-between;
     }
-
     .footer-logo {
       font-family: 'Black Ops One', sans-serif;
       font-size: 18px;
       letter-spacing: 0.2em;
       color: #1a1a1a;
     }
-
     .footer-links {
       display: flex; gap: 32px; list-style: none;
     }
-
     .footer-links a {
       font-size: 9px;
       letter-spacing: 0.3em;
@@ -519,7 +614,6 @@
       transition: color 0.3s;
     }
     .footer-links a:hover { color: #555; }
-
     .footer-copy {
       font-size: 9px;
       letter-spacing: 0.2em;
@@ -530,18 +624,24 @@
       from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .coin-section { grid-template-columns: 1fr; gap: 48px; text-align: center; }
+      .nav-links { gap: 20px; }
+      .roadmap-section { padding: 80px 24px; }
+      .year { font-size: 18px; }
+      .car { width: 60px; }
+    }
   </style>
 </head>
 <body>
-
   <div class="cursor" id="cursor"></div>
   <div class="loadbar"></div>
-
   <div class="corner corner-tl"></div>
   <div class="corner corner-tr"></div>
   <div class="corner corner-bl"></div>
@@ -583,261 +683,11 @@
     </div>
   </section>
 
-  <!-- LIVE TIJDLIJN -->
-  <!DOCTYPE html>
-<html lang="nl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BVM Roadmap – Live Progress</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #0a0a0a;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #e0e0e0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-
-    .roadmap {
-      width: 100%;
-      max-width: 1100px;
-      background: #111;
-      border-radius: 16px;
-      padding: 48px 40px 40px;
-      border: 1px solid #222;
-    }
-
-    .header {
-      text-align: center;
-      margin-bottom: 48px;
-    }
-
-    .header h2 {
-      font-size: 14px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #888;
-      font-weight: 500;
-    }
-
-    .header .accent {
-      width: 40px;
-      height: 2px;
-      background: #ff3b3b;
-      margin: 12px auto 0;
-    }
-
-    /* Timeline */
-    .timeline-wrapper {
-      position: relative;
-      padding: 0 20px;
-    }
-
-    .timeline-line {
-      position: absolute;
-      top: 48px;
-      left: 40px;
-      right: 40px;
-      height: 3px;
-      background: #2a2a2a;
-      border-radius: 2px;
-      z-index: 1;
-    }
-
-    .timeline-progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 8%; /* ~2026 positie */
-      background: linear-gradient(90deg, #00d4ff, #0099cc);
-      border-radius: 2px;
-      box-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
-      transition: width 1.2s ease;
-    }
-
-    .milestones {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-      z-index: 2;
-    }
-
-    .milestone {
-      text-align: center;
-      width: 22%;
-      position: relative;
-    }
-
-    .dot {
-      width: 18px;
-      height: 18px;
-      background: #333;
-      border: 3px solid #555;
-      border-radius: 50%;
-      margin: 0 auto 16px;
-      position: relative;
-      z-index: 3;
-      transition: all 0.3s ease;
-    }
-
-    .milestone.active .dot {
-      background: #00d4ff;
-      border-color: #00d4ff;
-      box-shadow: 0 0 16px rgba(0, 212, 255, 0.6);
-      transform: scale(1.15);
-    }
-
-    .year {
-      font-size: 28px;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .milestone:not(.active) .year {
-      color: #666;
-    }
-
-    .label {
-      font-size: 14px;
-      color: #999;
-      line-height: 1.3;
-    }
-
-    .milestone.active .label {
-      color: #ccc;
-    }
-
-    /* Auto */
-    .car-container {
-      position: absolute;
-      top: 18px;
-      left: 8%; /* zelfde als progress */
-      transform: translateX(-50%);
-      z-index: 10;
-      transition: left 1.2s ease;
-    }
-
-    .car {
-      width: 90px;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
-    }
-
-    .now-badge {
-      position: absolute;
-      top: -36px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #00d4ff;
-      color: #000;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 20px;
-      white-space: nowrap;
-      letter-spacing: 0.5px;
-    }
-
-    .now-badge::after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid #00d4ff;
-    }
-
-    /* Footer info */
-    .live-info {
-      margin-top: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      font-size: 14px;
-      color: #aaa;
-    }
-
-    .live-dot {
-      width: 8px;
-      height: 8px;
-      background: #00d4ff;
-      border-radius: 50%;
-      animation: pulse 1.8s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.3); }
-    }
-
-    .progress-bar-bottom {
-      margin-top: 32px;
-      height: 6px;
-      background: #222;
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 12%;
-      background: linear-gradient(90deg, #00d4ff, #0099cc);
-      border-radius: 3px;
-      transition: width 1.2s ease;
-    }
-
-    .progress-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 8px;
-      font-size: 12px;
-      color: #666;
-    }
-
-    /* Responsive */
-    @media (max-width: 700px) {
-      .roadmap {
-        padding: 32px 20px;
-      }
-
-      .year {
-        font-size: 20px;
-      }
-
-      .label {
-        font-size: 12px;
-      }
-
-      .car {
-        width: 65px;
-      }
-
-      .car-container {
-        top: 22px;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="roadmap">
-    <div class="header">
-      <h2>BVM Roadmap – Live Progress</h2>
-      <div class="accent"></div>
+  <!-- LIVE ROADMAP -->
+  <section class="roadmap-section">
+    <div class="roadmap-header">
+      <div class="tag">Live Progress</div>
+      <h2>BVM Roadmap</h2>
     </div>
 
     <div class="timeline-wrapper">
@@ -848,18 +698,13 @@
       <!-- Auto -->
       <div class="car-container" id="car">
         <div class="now-badge">NOW</div>
-        <!-- Simpele SVG auto (je kunt dit later vervangen door een echte auto-afbeelding) -->
         <svg class="car" viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Body -->
-          <path d="M10 32 L18 18 H45 L58 12 H95 L110 25 V38 H100 C100 42 96 45 92 45 H85 C81 45 77 42 77 38 H45 C45 42 41 45 37 45 H30 C26 45 22 42 22 38 H10 Z" fill="#1a1a1a" stroke="#00d4ff" stroke-width="1.5"/>
-          <!-- Windows -->
-          <path d="M48 18 L55 14 H90 L98 22 H52 Z" fill="#111" stroke="#00d4ff" stroke-width="1"/>
-          <!-- Wheels -->
-          <circle cx="32" cy="38" r="7" fill="#111" stroke="#00d4ff" stroke-width="1.5"/>
-          <circle cx="90" cy="38" r="7" fill="#111" stroke="#00d4ff" stroke-width="1.5"/>
-          <!-- Light -->
-          <circle cx="108" cy="28" r="3" fill="#00d4ff"/>
-          <!-- Belgian accent stripe -->
+          <path d="M10 32 L18 18 H45 L58 12 H95 L110 25 V38 H100 C100 42 96 45 92 45 H85 C81 45 77 42 77 38 H45 C45 42 41 45 37 45 H30 C26 45 22 42 22 38 H10 Z" fill="#111" stroke="#fff" stroke-width="1.5"/>
+          <path d="M48 18 L55 14 H90 L98 22 H52 Z" fill="#0a0a0a" stroke="#fff" stroke-width="1"/>
+          <circle cx="32" cy="38" r="7" fill="#0a0a0a" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="90" cy="38" r="7" fill="#0a0a0a" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="108" cy="28" r="3" fill="#fff"/>
+          <!-- Belgian stripe -->
           <rect x="20" y="26" width="8" height="3" fill="#ffcc00"/>
           <rect x="20" y="29" width="8" height="3" fill="#000"/>
           <rect x="20" y="32" width="8" height="3" fill="#ef3340"/>
@@ -892,57 +737,17 @@
 
     <div class="live-info">
       <div class="live-dot"></div>
-      <span>We are here – August 2026</span>
+      <span>We are here — August 2026</span>
     </div>
 
     <div class="progress-bar-bottom">
       <div class="progress-fill" id="progressFill"></div>
     </div>
     <div class="progress-labels">
-      <span>PROGRESS</span>
+      <span>Progress</span>
       <span>~12–15%</span>
     </div>
-  </div>
-
-  <script>
-    // Live berekening op basis van huidige datum
-    function updateProgress() {
-      const now = new Date();
-      const start = new Date('2026-01-01');
-      const end = new Date('2029-12-31');
-
-      const total = end - start;
-      const current = now - start;
-      let percent = Math.max(0, Math.min(100, (current / total) * 100));
-
-      // Visueel een beetje afronden zodat 2026 duidelijk vooraan staat
-      // 2026 = 0-25%, 2027 = 25-50%, etc.
-      const year = now.getFullYear();
-      let visualPercent;
-
-      if (year <= 2026) {
-        visualPercent = 8 + (now.getMonth() / 12) * 12; // 8% → ~20%
-      } else if (year === 2027) {
-        visualPercent = 25 + (now.getMonth() / 12) * 20;
-      } else if (year === 2028) {
-        visualPercent = 50 + (now.getMonth() / 12) * 20;
-      } else {
-        visualPercent = 75 + (now.getMonth() / 12) * 20;
-      }
-
-      visualPercent = Math.min(95, visualPercent);
-
-      document.getElementById('progressLine').style.width = visualPercent + '%';
-      document.getElementById('progressFill').style.width = visualPercent + '%';
-      document.getElementById('car').style.left = visualPercent + '%';
-    }
-
-    updateProgress();
-    // Optioneel: elke minuut updaten
-    // setInterval(updateProgress, 60000);
-  </script>
-</body>
-</html>
+  </section>
 
   <!-- WHY BELGIUM -->
   <section class="why-section">
@@ -988,6 +793,7 @@
   </footer>
 
   <script>
+    // Custom cursor
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -997,6 +803,30 @@
       el.addEventListener('mouseenter', () => cursor.classList.add('big'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
     });
+
+    // Live roadmap progress
+    function updateProgress() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth(); // 0-11
+
+      let visualPercent;
+      if (year <= 2026) {
+        visualPercent = 8 + (month / 11) * 14;      // 8% → ~22%
+      } else if (year === 2027) {
+        visualPercent = 28 + (month / 11) * 18;
+      } else if (year === 2028) {
+        visualPercent = 52 + (month / 11) * 18;
+      } else {
+        visualPercent = 76 + (month / 11) * 18;
+      }
+      visualPercent = Math.min(92, Math.max(6, visualPercent));
+
+      document.getElementById('progressLine').style.width = visualPercent + '%';
+      document.getElementById('progressFill').style.width = visualPercent + '%';
+      document.getElementById('car').style.left = visualPercent + '%';
+    }
+    updateProgress();
 
     // Scroll reveal
     const observer = new IntersectionObserver((entries) => {
@@ -1008,7 +838,7 @@
       });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.info-block, .coin-text, .why-title, .why-answer').forEach(el => {
+    document.querySelectorAll('.coin-text, .why-title, .why-answer').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(30px)';
       el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
